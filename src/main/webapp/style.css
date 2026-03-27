@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+.titulo {
+	text-align: center;
+	font-family: 'Arial black', sand-serif;
+	color: red;
+	font-size: 24px;
+}
+
+.texto {
+	text-align: center;
+	font-family: 'Arial', sand-serif;
+	color: black;
+	font-size: 20px;
+}
