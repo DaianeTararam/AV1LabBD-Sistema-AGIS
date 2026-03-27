@@ -28,7 +28,7 @@ foreign key usuarioCpf references usuario(cpf)
 go
 create table professor(
 usuarioCpf			char(11) not null,
-titulacaoProfessor	varchar(50) not null
+titulacao       	varchar(50) not null
 primary key(usuarioCpf)
 foreign key usuarioCpf references usuario(cpf)
 )
@@ -66,7 +66,7 @@ foreign key alunoRa references aluno(ra)
 go
 create table disciplina (
 codigoDisciplina	int identity(1001, 1),
-nomeDisciplina		varchar(25) not null,
+nomeDisciplina		varchar(50) not null,
 qtdeHorasSemanais	int not null,
 professorUsuarioCpf	char(11) not null
 primary key (codigoDisciplina)
@@ -84,7 +84,7 @@ foreign key codigoDisciplina references disciplina(codigoDisciplina)
 go
 create table conteudo(
 idConteudo			int not null,
-nomeConteudo		varchar(25) not null,
+nomeConteudo		varchar(50) not null,
 codigoDisciplina	int not null
 primary key (idConteudo)
 foreign key codigoDisciplina references disciplina(codigoDisciplina)
