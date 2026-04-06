@@ -5,18 +5,97 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import model.Aluno;
+import model.Curso;
+import model.Telefone;
+import persistence.AlunoDao;
+import persistence.CursoDao;
+import persistence.GenericDao;
 
-@WebServlet("/Aluno")
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+@WebServlet("/funcionarioSecretaria")
 public class AlunoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     public AlunoServlet() {
         super();
     }
+    
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String saida = "";
+        String erro = "";
+        List<Aluno> alunos = new ArrayList<>();
+        Aluno aluno = new Aluno();
+        String comando = request.getParameter("botao");
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().println("Página do Aluno");
-	}
+        try {
+            aluno.setCpf(request.getParameter("cpf"));
+            aluno.setNome(request.getParameter("nome"));
+            aluno.setNomeSocial(request.getParameter("nome_social"));
+            
+            String dataNasc = request.getParameter("data_nascimento");
+            if (dataNasc != null && !dataNasc.isEmpty()) {
+                aluno.setDataNascimento(LocalDate.parse(dataNasc));
+            }
+            
+            aluno.setEmailPessoal(request.getParameter("email_pessoal"));
+            aluno.setEmailCorporativo(request.getParameter("email_corporativo"));
+
+            String pontuacaoStr = request.getParameter("pontuacao_vestibular");
+            if (pontuacaoStr != null && !pontuacaoStr.isEmpty()) {
+                aluno.setPontuacaoVestibular(new BigDecimal(pontuacaoStr.replace(",", ".")));
+            }
+
+            String ddd = request.getParameter("ddd");
+            String num = request.getParameter("num");
+            if (ddd != null && num != null && !num.isEmpty()) {
+                Telefone tel = new Telefone(Integer.parseInt(ddd), Integer.parseInt(num));
+                aluno.getTelefones().add(tel);
+            }
+
+            String cursoCod = request.getParameter("curso");
+            if (cursoCod != null && !cursoCod.isEmpty()) {
+                Curso c = new Curso();
+                c.setCodigoCurso(Integer.parseInt(cursoCod));
+                aluno.setCurso(c);
+            }
+
+            AlunoDao aDao = new AlunoDao(new GenericDao());
+            
+            if (comando.equalsIgnoreCase("Cadastrar")) {
+                saida = aDao.inserir(aluno);
+                aluno = new Aluno();
+            } else if (comando.equalsIgnoreCase("Listar")) {
+                alunos = aDao.listar();
+            } else if (comando.equalsIgnoreCase("Atualizar")) {
+                saida = aDao.atualizar(aluno);
+            } else if (comando.equalsIgnoreCase("Excluir")) {
+                saida = aDao.deletar(aluno);
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            erro = "Erro no processamento: " + e.getMessage();
+        }
+
+        request.setAttribute("saida", saida);
+        request.setAttribute("erro", erro);
+        request.setAttribute("aluno", aluno);
+        request.setAttribute("alunos", alunos);
+        
+        try {
+            CursoDao cDao = new CursoDao(new GenericDao());
+            request.setAttribute("cursos", cDao.listar());
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar cursos: " + e.getMessage());
+        }
+        
+        request.getRequestDispatcher("funcionariosecretaria.jsp").forward(request, response);
+    }
 
 }

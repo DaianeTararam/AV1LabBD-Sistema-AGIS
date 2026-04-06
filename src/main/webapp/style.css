@@ -1,15 +1,76 @@
 @charset "UTF-8";
-
-.titulo {
+/* Paleta de cores do meu sistema AGIS*/
+:root{
+  --cinza-escuro: #3e4444;
+  --verde-claro: #82b74b;
+  --verde-escuro: #405d27;
+  --bege: #c1946a;
+}
+h1 {
 	text-align: center;
-	font-family: 'Arial black', sand-serif;
-	color: red;
-	font-size: 24px;
+	font-family: 'Arial black', sans-serif;
+	color: var(--verde-escuro);
+	font-size: 40px;
 }
 
-.texto {
-	text-align: center;
-	font-family: 'Arial', sand-serif;
-	color: black;
-	font-size: 20px;
+input, select {
+  border: 1px solid var(--bege);
+  padding: 8px;
+  border-radius: 4px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+body {
+  background-color: #f5f5f5;
+}
+
+.card-agis {
+  background-color: white;
+  border: 2px solid var(--verde-claro);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+ 
+.btn-agis {
+	background-color: var(--verde-escuro);
+	color: white;
+	padding: 10px 20px;
+	border-radius: 5px;
+	font-weight: bold;
+	border: none;
+}
+
+header {
+	background-color: var(--bege);
+	color: white;
+  	min-height: 80px;
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	padding: 20px;
+  	font-size: 26px;
+  	font-weight: bold;
+}
+
+footer{
+  	width: 100%;
+  	background-color: var(--bege);
+  	color: var(--cinza-escuro);
+  	min-height: 80px;
+  	display: flex;
+  	justify-content: center;
+  	padding: 20px;
+}
+table{
+	border: none;
+}
+
+label {
+    color: var(--cinza-escuro);
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
 }
