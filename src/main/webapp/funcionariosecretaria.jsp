@@ -49,7 +49,7 @@
 		
 		        <label for="pontuacao_vestibular" class="form-label">Pontuação Vestibular (0.0 a 100.0)</label>
 		        <input type="number" name="pontuacao_vestibular" id="pontuacao_vestibular"
-		               placeholder="00.0" min="0" max="100" step="0.1"
+		               placeholder="000.0" min="0.0" max="100.0" step="0.1"
 		               value='<c:out value="${aluno.pontuacaoVestibular}"/>'>
 		             
 		        <label class="form-label">Telefone Principal</label>
@@ -66,16 +66,15 @@
 				<select name="curso" class="form-select">
 				    <option value="">Selecione um curso...</option>
 				    <c:forEach var="c" items="${cursos}"> 
-				        <option value="${c.codigoCurso}">${c.nome}</option>
+				        <option value="${c.codigoCurso}">${c.nomeCurso}</option>
 				    </c:forEach>
 				</select>
 		
 		        <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
 		            <button type="submit" name="botao" value="Cadastrar" class="btn-agis">Cadastrar</button>
 		            <button type="submit" name="botao" value="Atualizar" class="btn-agis">Atualizar</button>
-		            <button type="submit" name="botao" value="Listar" class="btn-agis" style="background-color: var(--verde-claro);">Listar Todos</button>
-		            <button type="submit" name="botao" value="Excluir" class="btn-agis" 
-		                    style="background-color: #dc3545;" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+		            <button type="submit" name="botao" value="Listar" class="btn-agis" style="background-color: var(--verde-claro);">Listar Alunos</button>
+		            <button type="submit" name="botao" value="Excluir" class="btn-agis">Excluir</button>
 		        </div>
 		    </form>
 		</div>
@@ -104,13 +103,10 @@
 		        </table>
 		    </div>
 		</c:if>
-		<div style="background: yellow; padding: 10px;">
-    DEBUG - Lista de Cursos: ${cursos} <br>
-    DEBUG - Tamanho da Lista: ${cursos.size()}
-</div>
-	
-</body>
+		
 	<footer>
 		<p>Desenvolvido por: Daiane Tararam</p>
 	</footer>
+</body>
+	
 </html>

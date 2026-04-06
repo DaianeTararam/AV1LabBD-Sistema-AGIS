@@ -19,25 +19,7 @@
 		<br/>
 		<br/>
 			<p>Página do professor desenvolvida apenas para fins didáticos!</p>	
-		</div>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
+		
 	</main>
 	<footer>
 		<p>Desenvolvido por: Daiane Tararam</p>

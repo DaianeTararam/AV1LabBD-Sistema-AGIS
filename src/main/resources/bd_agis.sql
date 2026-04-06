@@ -35,7 +35,7 @@ foreign key (usuario_cpf) references usuario(cpf)
 )
 go
 create table professor(
-usuario_cpf			char(11) not null,
+usuario_cpf			char(11) not null unique,
 titulacao       	varchar(50) not null
 primary key(usuario_cpf)
 foreign key (usuario_cpf) references usuario(cpf)
@@ -71,11 +71,11 @@ insert into curso(nome_curso, carga_horaria_curso, sigla_curso, nota_enade) valu
 ('Curso I', 3000, 'CSI', 4.0)
 go
 create table aluno(
-ra					varchar(20) not null,
+ra					varchar(20) not null unique,
 data_conclusao		date not null,
 pontuacao_vestibular decimal(3,1) not null,
 curso_codigo		int not null,
-usuario_cpf			char(11) not null
+usuario_cpf			char(11) not null unique
 primary key(ra)
 foreign key (usuario_cpf) references usuario(cpf),
 foreign key (curso_codigo) references curso(codigo_curso)
@@ -404,3 +404,5 @@ exec sp_aluno 'I', '00716588072', 'Maria Silva', null, '2000-05-10',
 select @saida
 
 
+select * from aluno
+select * from usuario

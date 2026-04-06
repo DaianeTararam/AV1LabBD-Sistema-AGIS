@@ -16,12 +16,12 @@
 		<form action="EscolhaUsuario" method="post">
 			<div class="mb-3">
             <label class="form-label">Escolha o tipo de usuário</label>
-            <select name="tipoUsuario" class="form-select">
-                <option value="">Selecione...</option>
-                <option value="Matricula">Aluno</option>
-                <option value="professor">Professor</option>
-                <option value="funcionarioSecretaria">Funcionário da Secretaria</option>
-            </select>
+            <select name="tipoUsuario" class="form-select" required>
+			    <option value="" disabled selected>Selecione seu perfil...</option>
+			    <option value="funcionarioSecretaria">Funcionário da Secretaria</option>
+			    <option value="professor">Professor</option>
+			    <option value="aluno">Aluno (Matrícula)</option>
+			</select>
         </div>
 
         <input type="submit"
@@ -34,4 +34,5 @@
 		<p>Desenvolvido por: Daiane Tararam</p>
 	</footer>
 </body>
+
 </html>

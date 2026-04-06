@@ -17,16 +17,27 @@ public class EscolhaUsuarioServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String tipoUsuario = request.getParameter("tipoUsuario");
-        
-        if("funcionarioSecretaria".equalsIgnoreCase(tipoUsuario)) {
-            response.sendRedirect("funcionariosecretaria.jsp");
-        } else if("professor".equalsIgnoreCase(tipoUsuario)) {
-            response.sendRedirect("professor.jsp");        
-        } else if("Matricula".equalsIgnoreCase(tipoUsuario)) { // <--- Mudança aqui
-            response.sendRedirect("matricula.jsp");
-        } else {
+        if (tipoUsuario == null || tipoUsuario.isEmpty()) {
             response.sendRedirect("index.jsp");
+            return; 
         }
+
+        if ("funcionariosecretaria".equalsIgnoreCase(tipoUsuario)) {
+            request.getRequestDispatcher("funcionarioSecretaria").forward(request, response);
+            return;
+        } 
+        
+        else if ("aluno".equalsIgnoreCase(tipoUsuario)) {
+            request.getRequestDispatcher("matricula").forward(request, response);
+            return;
+        } 
+        
+        else if ("professor".equalsIgnoreCase(tipoUsuario)) {
+            request.getRequestDispatcher("professor.jsp").forward(request, response);
+            return;
+        }
+
+        response.sendRedirect("index.jsp");
     }
 
 }
