@@ -1,5 +1,5 @@
 package persistence;
-
+//Interface criada para garantir que todos os DAOs se conversem entre si
 import java.sql.SQLException;
 import java.util.List;
 

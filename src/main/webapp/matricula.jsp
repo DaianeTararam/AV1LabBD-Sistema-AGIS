@@ -32,13 +32,12 @@
 		            <c:forEach var="d" items="${disciplinasDisponiveis}">
 		                <option value="${d.codigoDisciplina}">${d.nome}</option>
 		            </c:forEach>
-		            <option value="1005">Disciplina 5</option>
 		        </select>
 		      </div>
 		
 		      <div class="d-flex gap-2 mt-3">
 		        <button type="submit" name="botao" value="Matricular" class="btn-agis">Matricular</button>
-		        <button type="submit" name="botao" value="Listar" class="btn-agis" style="background-color: var(--verde-claro);">Listar Matérias</button>
+		        <button type="submit" name="botao" value="Listar" class="btn-agis" style="background-color: var(--verde-claro);">Listar</button>
 		      </div>
 		    </form>
 		  </div>

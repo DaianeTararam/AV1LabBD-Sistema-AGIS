@@ -1,6 +1,5 @@
 package persistence;
 
-import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,8 +24,8 @@ public class AlunoDao implements ICrud<Aluno>{
 	@Override
 	public Aluno buscar(Aluno aluno) throws SQLException, ClassNotFoundException {
 		Connection c = gDao.getConnection();
-		String sql = "SELECT a.ra, u.cpf, u.nome, u.nome_social, u.data_nascimento, "
-				   + "u.email_pessoal, u.email_corporativo, a.data_conclusao, a.pontuacao_vestibular, "
+		String sql = "SELECT a.ra, u.cpf, u.nome, u.nome_social, CONVERT(CHAR(10), u.data_nascimento, 103) as dataNasc, "
+				   + "u.email_pessoal, u.email_corporativo, a.data_conclusao, CONVERT(CHAR(5), a.pontuacao_vestibular) AS pontuacao, "
 				   + "c.codigo_curso, c.nome_curso, c.sigla_curso FROM "
 				   + "aluno a "
 				   + "INNER JOIN usuario u ON a.usuario_cpf = u.cpf "
@@ -35,7 +34,7 @@ public class AlunoDao implements ICrud<Aluno>{
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setString(1, aluno.getRa());
 		ResultSet rs = ps.executeQuery();
-		if(rs.next()) {
+		while(rs.next()) {
 			aluno.setRa(rs.getString("ra"));
 			aluno.setCpf(rs.getString("cpf"));
 			aluno.setNome(rs.getString("nome"));
@@ -43,14 +42,9 @@ public class AlunoDao implements ICrud<Aluno>{
 			aluno.setDataNascimento(LocalDate.parse(rs.getString("data_nascimento")));
 			aluno.setEmailPessoal(rs.getString("email_pessoal"));
 			aluno.setEmailCorporativo(rs.getString("email_corporativo"));
-			//aluno.setDataConclusao(LocalDate.parse(rs.getString("data_conclusao")));
-			String dataConclusaoStr = rs.getString("data_conclusao");
-			if (dataConclusaoStr != null && !dataConclusaoStr.isEmpty()) {
-			    aluno.setDataConclusao(LocalDate.parse(dataConclusaoStr));
-			}
+			aluno.setDataConclusao(LocalDate.parse(rs.getString("data_conclusao")));
 
-			aluno.setPontuacaoVestibular(new BigDecimal(rs.getString("pontuacao_vestibular")));
-
+			aluno.setPontuacaoVestibular(rs.getBigDecimal("pontuacao_vestibular"));
 			Curso curso = new Curso();
 			curso.setCodigoCurso(rs.getInt("codigo_curso"));
 			aluno.setCurso(curso);
@@ -91,7 +85,7 @@ public class AlunoDao implements ICrud<Aluno>{
 		 cs.setString(2, aluno.getCpf());
 		 cs.setString(3, aluno.getNome());
 		 cs.setString(4, aluno.getNomeSocial());
-		 cs.setDate(5, java.sql.Date.valueOf(aluno.getDataNascimento()));
+		 cs.setString(5, aluno.getDataNascimento().toString());
 		 cs.setString(6, aluno.getEmailPessoal());
 		 cs.setString(7, aluno.getEmailCorporativo());
 		 cs.setNull(8, Types.DATE);
@@ -136,7 +130,7 @@ public class AlunoDao implements ICrud<Aluno>{
 		 cs.setString(2, aluno.getCpf());
 		 cs.setString(3, aluno.getNome());
 		 cs.setString(4, aluno.getNomeSocial());
-		 cs.setDate(5, java.sql.Date.valueOf(aluno.getDataNascimento()));
+		 cs.setString(5, aluno.getDataNascimento().toString());
 		 cs.setString(6, aluno.getEmailPessoal());
 		 cs.setString(7, aluno.getEmailCorporativo());
 		 cs.setNull(8, Types.DATE);

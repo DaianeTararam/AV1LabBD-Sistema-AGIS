@@ -87,12 +87,10 @@ public class MatriculaDao implements ICrud<Matricula> {
 	@Override
     public String inserir(Matricula matricula) throws SQLException, ClassNotFoundException {
         Connection c = gDao.getConnection();
-        // Usando a procedure para validar as regras de negócio
-        String sql = "{CALL sp_matricula(?, ?, ?)}";
+        String sql = "{CALL sp_matricula_disciplina(?, ?, ?)}";
         CallableStatement cs = c.prepareCall(sql);
         
         cs.setString(1, matricula.getAluno().getRa());
-        // Pegando a disciplina da lista que você tem no Model
         cs.setInt(2, matricula.getDisciplinas().get(0).getCodigoDisciplina());
         cs.registerOutParameter(3, Types.VARCHAR);
 

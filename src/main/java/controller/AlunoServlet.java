@@ -21,12 +21,12 @@ import java.util.List;
 
 @WebServlet("/funcionarioSecretaria")
 public class AlunoServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     public AlunoServlet() {
         super();
     }
-    
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String saida = "";
         String erro = "";
@@ -35,22 +35,21 @@ public class AlunoServlet extends HttpServlet {
         String comando = request.getParameter("botao");
 
         try {
-            AlunoDao aDao = new AlunoDao(new GenericDao());
+            String ra = request.getParameter("ra");
+            if (ra != null && !ra.isEmpty() && !comando.equalsIgnoreCase("Listar")) {
+                aluno.setRa(ra);
+            }
 
-            if (comando != null && comando.equalsIgnoreCase("Listar")) {
-                alunos = aDao.listar();
-            } 
-            else if (comando != null) {
-                
+            if (comando.equalsIgnoreCase("Cadastrar") || comando.equalsIgnoreCase("Atualizar")) {
                 aluno.setCpf(request.getParameter("cpf"));
                 aluno.setNome(request.getParameter("nome"));
                 aluno.setNomeSocial(request.getParameter("nome_social"));
-                
+
                 String dataNasc = request.getParameter("data_nascimento");
                 if (dataNasc != null && !dataNasc.isEmpty()) {
                     aluno.setDataNascimento(LocalDate.parse(dataNasc));
                 }
-                
+
                 aluno.setEmailPessoal(request.getParameter("email_pessoal"));
                 aluno.setEmailCorporativo(request.getParameter("email_corporativo"));
 
@@ -72,40 +71,54 @@ public class AlunoServlet extends HttpServlet {
                     c.setCodigoCurso(Integer.parseInt(cursoCod));
                     aluno.setCurso(c);
                 }
-
-                if (comando.equalsIgnoreCase("Cadastrar")) {
-                    saida = aDao.inserir(aluno);
-                    aluno = new Aluno();
-                } else if (comando.equalsIgnoreCase("Atualizar")) {
-                    saida = aDao.atualizar(aluno);
-                } else if (comando.equalsIgnoreCase("Excluir")) {
-                    saida = aDao.deletar(aluno);
-                }
             }
 
-        } catch (SQLException e) {
-            if (e.getMessage().contains("UNIQUE") || e.getErrorCode() == 2627) {
-                erro = "Este CPF já está cadastrado no sistema!";
-            } else {
-                erro = "Erro no banco de dados: " + e.getMessage();
-            }
-        } catch (ClassNotFoundException e) {
-            erro = "Erro de configuração: " + e.getMessage();
-        }
+            GenericDao gDao = new GenericDao();
+            AlunoDao aDao = new AlunoDao(gDao);
 
-        request.setAttribute("saida", saida);
-        request.setAttribute("erro", erro);
-        request.setAttribute("aluno", aluno);
-        request.setAttribute("alunos", alunos);
-        
-        try {
-            CursoDao cDao = new CursoDao(new GenericDao());
-            request.setAttribute("cursos", cDao.listar());
-        } catch (Exception e) {
-            System.err.println("Erro ao carregar cursos: " + e.getMessage());
+            if (comando.equalsIgnoreCase("Cadastrar")) {
+                saida = aDao.inserir(aluno);
+            }
+            if (comando.equalsIgnoreCase("Atualizar")) {
+                saida = aDao.atualizar(aluno);
+            }
+            if (comando.equalsIgnoreCase("Excluir")) {
+                saida = aDao.deletar(aluno);
+            }
+            if (comando.equalsIgnoreCase("Buscar")) {
+                aluno = aDao.buscar(aluno);
+            }
+            if (comando.equalsIgnoreCase("Listar")) {
+                alunos = aDao.listar();
+            }
+
+        } catch (SQLException | ClassNotFoundException | NumberFormatException e) {
+            saida = "";
+            erro = e.getMessage();
+            if (erro.contains("input string")) {
+                erro = "Preencha os campos corretamente";
+            }
+        } finally {
+            if (!comando.equalsIgnoreCase("Buscar")) {
+                aluno = null;
+            }
+            if (!comando.equalsIgnoreCase("Listar")) {
+                alunos = null;
+            }
+
+            request.setAttribute("saida", saida);
+            request.setAttribute("erro", erro);
+            request.setAttribute("aluno", aluno);
+            request.setAttribute("alunos", alunos);
+
+            try {
+                CursoDao cDao = new CursoDao(new GenericDao());
+                request.setAttribute("cursos", cDao.listar());
+            } catch (Exception e) {
+                System.err.println("Erro ao carregar cursos: " + e.getMessage());
+            }
+
+            request.getRequestDispatcher("funcionariosecretaria.jsp").forward(request, response);
         }
-        
-        request.getRequestDispatcher("funcionariosecretaria.jsp").forward(request, response);
     }
-
 }

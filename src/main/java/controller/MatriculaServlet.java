@@ -25,7 +25,6 @@ public class MatriculaServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Geralmente usado para carregar a página inicial ou comboboxes
         request.getRequestDispatcher("matricula.jsp").forward(request, response);
 	}
 

@@ -17,10 +17,10 @@
 			<div class="mb-3">
             <label class="form-label">Escolha o tipo de usuário</label>
             <select name="tipoUsuario" class="form-select" required>
-			    <option value="" disabled selected>Selecione seu perfil...</option>
+			    <option value="">Selecione seu perfil...</option>
 			    <option value="funcionarioSecretaria">Funcionário da Secretaria</option>
 			    <option value="professor">Professor</option>
-			    <option value="aluno">Aluno (Matrícula)</option>
+			    <option value="aluno">Aluno</option>
 			</select>
         </div>
 
