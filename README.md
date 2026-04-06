@@ -18,11 +18,15 @@ O sistema foi estruturado seguindo o padrão **MVC (Model-View-Controller)** par
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/DaianeTararam/AV1LabBD-Sistema-AGIS/main/src/main/imagens-readme/Arquitetura-MVC.png" alt="Arquitetura MVC do Sistema AGIS" width="400">
+  <br>
+  <strong>Figura 1: Arquitetura MVC</strong>
 </p>
 
 ---
 
 ## Diagramas
+
+- **Diagrama Entidade-Relacionamento**
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/DaianeTararam/AV1LabBD-Sistema-AGIS/main/src/main/doc/AGIS%20-%20DER.jpg" alt="Diagrama de Entidade-Relacionamento (DER)" width="700">
@@ -30,7 +34,8 @@ O sistema foi estruturado seguindo o padrão **MVC (Model-View-Controller)** par
   <strong>Figura 2: Modelagem de Dados do Sistema AGIS (DER)</strong>
 </p>
 
-
+- **Diagrama de Classes**
+  
 <p align="center">
   <img src="https://raw.githubusercontent.com/DaianeTararam/AV1LabBD-Sistema-AGIS/main/src/main/doc/Diagrama%20de%20Classes%20-%20AGIS.jpg" alt="Diagrama de Classes - Sistema AGIS" width="750">
   <br>
